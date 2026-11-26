@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_form_oris_hub" model="ir.ui.view">
+        <field name="name">stock.picking.form.oris.hub</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock_delivery.view_picking_withcarrier_out_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_send_to_carrier"
+                        string="Send to GHTK"
+                        type="object"
+                        class="btn-primary"
+                        invisible="picking_type_code != 'outgoing' or state != 'assigned' or carrier_tracking_ref or not carrier_id or delivery_type != 'ghtk'"/>
+            </xpath>
+            <xpath expr="//field[@name='carrier_id']" position="after">
+                <field name="shipping_status"/>
+                <field name="shipping_label" readonly="1" invisible="not shipping_label"/>
+                <field name="shipping_fee" readonly="1" invisible="not carrier_tracking_ref"/>
+                <field name="shipping_insurance_fee" readonly="1" invisible="not carrier_tracking_ref"/>
+                <field name="shipping_sent_at" readonly="1" invisible="not shipping_sent_at"/>
+                <field name="shipping_cancelled_at" readonly="1" invisible="not shipping_cancelled_at"/>
+                <field name="shipping_error" readonly="1" invisible="not shipping_error"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
